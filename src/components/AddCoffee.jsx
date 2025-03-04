@@ -1,46 +1,51 @@
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 const AddCoffee = () => {
-    const handleAddCoffee=event=>{
-        event.preventDefault();
+  const handleAddCoffee = (event) => {
+    event.preventDefault();
 
-        const form=event.target;
+    const form = event.target;
 
-        const name=form.name.value;
-        const quantity=form.quantity.value;
-        const supplier=form.supplier.value;
-        const taste=form.taste.value;
-        const category=form.category.value;
-        const details=form.details.value;
-        const photo=form.photo.value;
+    const name = form.name.value;
+    const quantity = form.quantity.value;
+    const supplier = form.supplier.value;
+    const taste = form.taste.value;
+    const category = form.category.value;
+    const details = form.details.value;
+    const photo = form.photo.value;
 
-        const newCoffee={name,quantity,supplier,taste,category,details,photo}
-        console.log(newCoffee);
+    const newCoffee = {
+      name,
+      quantity,
+      supplier,
+      taste,
+      category,
+      details,
+      photo,
+    };
+    console.log(newCoffee);
 
-        //send the data to the sarver
-        fetch('http://localhost:5000/coffee',{
-          method:'POST',
-          headers:{
-            'content-type':'application/json'
-          },
-          body:JSON.stringify(newCoffee)
-        })
-        .then(res=> res.json())
-        .then(data=>{
-          console.log(data);
-          if(data.insertedId){
-            Swal.fire({
-              title: 'Success!',
-              text: 'Coffee added Successfully',
-              icon: 'success',
-              confirmButtonText: 'Cool'
-            })
-
-          }
-        })
-
-
-    }
+    //send the data to the sarver
+    fetch("http://localhost:5000/coffee", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newCoffee),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Success!",
+            text: "Coffee added Successfully",
+            icon: "success",
+            confirmButtonText: "Cool",
+          });
+        }
+      });
+  };
   return (
     <div className="bg-[#F4F3F0] p-24">
       <h3 className="text-3xl font-extrabold">Add a Coffee</h3>
