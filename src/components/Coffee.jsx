@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const CoffeeCard = ({ coffee ,coffees,setCoffees}) => {
+const Coffee = ({ coffee ,coffees,setCoffees}) => {
   const { _id, name, quantity, supplier, taste, photo } = coffee;
   const handleDelete = (_id) => {
     console.log(_id);
@@ -67,4 +67,4 @@ const CoffeeCard = ({ coffee ,coffees,setCoffees}) => {
   );
 };
 
-export default CoffeeCard;
+export default Coffee;
