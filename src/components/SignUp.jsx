@@ -14,25 +14,43 @@ const SignUp = () => {
         const password = form.password.value;
         console.log(name, email, password, photo);
 
-        if (
-          password.length < 6 ||
-          !/[A-Z]/.test(password) ||
-          !/[!@#$%^&*()_+{}[\]:;<>,.?~\\-]/.test(password)
-        ) {
-          toast.error(
-            "Password must be at least 6 character & one capital letter & one special character"
-          );
-          return;
-        }
+        // if (
+        //   password.length < 6 ||
+        //   !/[A-Z]/.test(password) ||
+        //   !/[!@#$%^&*()_+{}[\]:;<>,.?~\\-]/.test(password)
+        // ) {
+        //   toast.error(
+        //     "Password must be at least 6 character & one capital letter & one special character"
+        //   );
+        //   return;
+        // }
 
         createUser(email, password)
         .then(result=>{
-            console.log(result.user)
-        }
-         
-        )
+            console.log(result.user);
+            const createdAt=result?.user?.metadata?.creationTime;
+
+            const newUser={name,email,createdAt}
+
+            //save new user info to the database
+            fetch('http://localhost:5000/users',{
+              method:'POST',
+              headers:{
+                'content-type':'application/json'
+              },
+              body:JSON.stringify(newUser )
+            })
+            .then(res=>res.json())
+            .then(data=>{
+              if(data.insertedId){
+                toast.success("User created successfully");
+          
+              }
+            })
+
+        })
         .catch((error) => {
-         console.log('error',error)
+          toast.error(error.message);
         });
 
 
@@ -111,8 +129,8 @@ const SignUp = () => {
         </form>
         <p className="text-center mt-4">
           Already have an account!!
-          <Link className="text-blue-600" to="/login">
-            Login
+          <Link className="text-blue-600" to="/signin">
+            SignIn
           </Link>
         </p>
       </div>
